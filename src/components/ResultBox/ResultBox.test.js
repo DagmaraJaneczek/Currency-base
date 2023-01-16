@@ -26,4 +26,23 @@ describe('Component ResultBox', () => {
         }
 
     });
+
+    it('should render proper info about conversion when USD -> PLN', () => {
+
+        const testCases = [
+            {from: 'USD', to: 'PLN', amount: '3.43', output: '$3.43 = PLN 12.00'},
+            {from: 'USD', to: 'PLN', amount: '5.71', output: '$5.71 = PLN 20.00'},
+            {from: 'USD', to: 'PLN', amount: '0.57', output: '$0.57 = PLN 2.00'},
+            {from: 'USD', to: 'PLN', amount: '28.57', output: '$28.57 = PLN 100.00'},
+            {from: 'USD', to: 'USD', amount: '28.57', output: '$28.57 = $28.57'}
+        ];
+
+        for(const testObj of testCases) {
+            render(<ResultBox from={testObj.from} to={testObj.to} amount={testObj.amount} />);
+            const output = screen.getByTestId('output');
+            expect(output).toHaveTextContent(testObj.output);
+
+            cleanup();
+        }
+    });
 });
